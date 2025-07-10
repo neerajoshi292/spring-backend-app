@@ -3,6 +3,7 @@ package com.example.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -181,9 +182,17 @@ public class OrganizationServiceImpl implements OrganizationService{
 				organization.setOrgName(organizationDTO.getOrgName());
 			}
 			if(!Strings.isNullOrEmpty(organizationDTO.getUniqueIdentityNumber())) {
+				Optional<Organization> isExist = organizationRepository.findByUniqueIdentityNumber(organizationDTO.getUniqueIdentityNumber());
+				if(isExist.isPresent()) {
+					throw new CustomErrorHandleException("UniqueIdentityNumber already exists - "+organizationDTO.getUniqueIdentityNumber());
+				}
 				organization.setUniqueIdentityNumber(organizationDTO.getUniqueIdentityNumber());
 			}
 			if(!Strings.isNullOrEmpty(organizationDTO.getEmail())) {
+				Optional<Organization> isExist = organizationRepository.findByEmail(organizationDTO.getEmail());
+				if(isExist.isPresent()) {
+					throw new CustomErrorHandleException("Email already exists - "+organizationDTO.getEmail());
+				}
 				organization.setEmail(organizationDTO.getEmail());
 			}
 			if(!Strings.isNullOrEmpty(organizationDTO.getPassword())) {
