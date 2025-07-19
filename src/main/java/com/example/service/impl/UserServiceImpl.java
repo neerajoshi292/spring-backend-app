@@ -144,5 +144,14 @@ public class UserServiceImpl implements UserService {
 			log.error("------- Exception :: {}",e);
 			throw new CustomErrorHandleException("Error while mapping UserDTO to User"+e);
 		}
+	}
+
+	@Override
+	public String deleteUser(Long uId) {
+		// TODO Auto-generated method stub
+		
+		User find = findUserById(uId);
+		userRepository.delete(find);
+		return "User Deleted !";
 	}	
 }

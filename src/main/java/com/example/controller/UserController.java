@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,7 +45,7 @@ public class UserController {
 	
 	@GetMapping
 	public ResponseEntity<?> viewAllUser() {
-		log.debug("Hii inside the view all user");
+		log.info("Hii inside the view all user");
 		List<User> viewAllUsers = userService.viewAllUsers();
 		return !CollectionUtils.isEmpty(viewAllUsers) ? ResponseEntity.ok(viewAllUsers) : ResponseEntity.noContent().build();
 	}
@@ -75,4 +76,11 @@ public class UserController {
 	    }
 	    return ResponseEntity.internalServerError().body("Unexpected error in search"); 
 	 }
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deleteUser(@RequestParam("userId") Long userId) {
+		log.info("Hii inside the delete user");
+		String deleteUser = userService.deleteUser(userId);
+		return ResponseEntity.ok(deleteUser);
+	}
 }

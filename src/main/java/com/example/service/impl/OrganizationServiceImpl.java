@@ -252,7 +252,7 @@ public class OrganizationServiceImpl implements OrganizationService{
 				log.warn("----- At the create organization time user not saved -------------");
 			}
 		} catch (Exception e) {
-			throw new CustomErrorHandleException("Error while mapping OrganizationDTO to Organization : "+e);
+			throw new CustomErrorHandleException(e.getMessage());
 		}
 	}	
 }
